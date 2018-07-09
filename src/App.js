@@ -19,9 +19,9 @@ const App = () => (
     <Aux>
         <NotificationSystem />
         <Switch>
-            <AppLayout path="/queue" component={Queue} />
-            <AppLayout path="/settings/category" component={CategorySettings} />
-            <HomeLayout path="/" component={Home} />
+            <AppLayout exact path="/queue" component={Queue} />
+            <AppLayout exact path="/settings/category" component={CategorySettings} />
+            <HomeLayout exact path="/" component={Home} />
             <ErrorLayout path="*" component={Error} />
         </Switch>
     </Aux>
