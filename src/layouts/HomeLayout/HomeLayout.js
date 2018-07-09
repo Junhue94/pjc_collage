@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
-import AppHeader from '../../components/Menu/AppHeader/AppHeader';
+
+import AppHeader from '../../components/Menu/AppHeader';
 import styles from './HomeLayout.scss';
 
 const HomeLayout = ({ component: Component, ...rest }) => (

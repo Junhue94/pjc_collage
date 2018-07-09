@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import Aux from '../../utils/Auxiliary/Auxiliary';
+import CollageCanvas from '../../components/Canvas/Collage';
+
 class Home extends Component {
     componentDidMount() {
         console.log('Home');
@@ -7,7 +10,10 @@ class Home extends Component {
 
     render() {
         return (
-            <div>This is home</div>
+            <Aux>
+                <div>This is home</div>
+                <CollageCanvas />
+            </Aux>
         );
     }
 }

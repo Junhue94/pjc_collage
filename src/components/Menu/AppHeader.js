@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
-import Aux from '../../../utils/Auxiliary/Auxiliary';
+
+import Aux from '../../utils/Auxiliary/Auxiliary';
 import styles from './AppHeader.scss';
 
 const AppHeader = () => (
