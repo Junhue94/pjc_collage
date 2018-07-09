@@ -1,11 +1,12 @@
 import React from 'react';
+import styles from './Queue.scss';
 
 /**
  * Queue Component
  */
 const Queue = () => (
     <div>
-        This is queue page
+        <p className={styles.test}>This is queue page</p>
     </div>
 );
 
