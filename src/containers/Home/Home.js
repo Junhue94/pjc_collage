@@ -10,6 +10,7 @@ import {
     defaultRectangle,
     defaultTriangle,
     defaulIText,
+    defaultImage,
 } from '../../utils/Canvas/helper';
 import styles from './Home.scss';
 
@@ -39,8 +40,6 @@ class Home extends Component {
             case 'text':
                 this.generateIText();
                 break;
-            case 'image':
-                break;
             case 'triangle':
                 this.drawTriangle();
                 break;
@@ -52,6 +51,22 @@ class Home extends Component {
                 break;
             default:
         }
+    };
+
+    handleImageUpload = (e) => {
+        const reader = new FileReader();
+        reader.onload = (readerEvent) => {
+            const imgObj = new Image();
+            imgObj.src = readerEvent.target.result;
+            imgObj.onload = () => {
+                const image = new fabric.Image(imgObj);
+                image.set(defaultImage);
+                this.collageCanvas.centerObject(image);
+                this.collageCanvas.add(image);
+                this.collageCanvas.renderAll();
+            };
+        };
+        reader.readAsDataURL(e.target.files[0]);
     };
 
     drawCircle = () => {
@@ -72,6 +87,7 @@ class Home extends Component {
     };
 
     toggleDrawingMode = (option) => {
+        // TODO http://fabricjs.com/freedrawing
         this.collageCanvas.isDrawingMode = (option === 'drawing');
     };
 
@@ -94,13 +110,21 @@ class Home extends Component {
                 >
                     <i className="fa fa-text-width" aria-hidden="true" />
                 </Menu.Item>
-                <Menu.Item
-                    name="image"
-                    active={activeCanvasOption === 'image'}
-                    onClick={this.handleCanvasOptionsClick}
-                >
-                    <i className="fa fa-picture-o" aria-hidden="true" />
-                </Menu.Item>
+                <label htmlFor="imageUpload">
+                    <Menu.Item
+                        name="image"
+                        active={activeCanvasOption === 'image'}
+                        onClick={this.handleCanvasOptionsClick}
+                    >
+                        <i className="fa fa-picture-o" aria-hidden="true" />
+                        <input
+                            id="imageUpload"
+                            type="file"
+                            className={styles.fileInput}
+                            onChange={this.handleImageUpload}
+                        />
+                    </Menu.Item>
+                </label>
                 <Menu.Item
                     name="triangle"
                     active={activeCanvasOption === 'triangle'}
