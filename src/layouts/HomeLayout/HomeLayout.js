@@ -10,7 +10,6 @@ const HomeLayout = ({ component: Component, ...rest }) => (
         {...rest}
         render={matchProps => (
             <Container
-                fluid
                 className={styles.container}
             >
                 <AppHeader />

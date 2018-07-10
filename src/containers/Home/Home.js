@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import { Menu } from 'semantic-ui-react';
+import { fabric } from 'fabric';
+import { Menu, Grid, GridRow, GridColumn, List } from 'semantic-ui-react';
 
 import Aux from '../../utils/Auxiliary/Auxiliary';
-import CollageCanvas from '../../components/Canvas/Collage';
 import { MSG_HOME_MAIN_HEADER } from '../../localization/en';
-import styles from './Home.scss';
 import coneSvg from '../../assets/icon/cone.svg';
+import {
+    defaultCircle,
+    defaultRectangle,
+    defaultTriangle,
+    defaulIText,
+} from '../../utils/Canvas/helper';
+import styles from './Home.scss';
 
 class Home extends Component {
     constructor(props) {
@@ -16,7 +22,58 @@ class Home extends Component {
         };
     }
 
-    handleCanvasOptionsClick = (e, { name }) => this.setState({ activeCanvasOption: name });
+    componentDidMount() {
+        const width = 1120;
+        const height = 630;
+        this.collageCanvas = new fabric.Canvas('collage-canvas', {
+            width,
+            height,
+        });
+    }
+
+    handleCanvasOptionsClick = (e, { name }) => {
+        this.setState({ activeCanvasOption: name });
+        this.toggleDrawingMode(name);
+
+        switch (name) {
+            case 'text':
+                this.generateIText();
+                break;
+            case 'image':
+                break;
+            case 'triangle':
+                this.drawTriangle();
+                break;
+            case 'circle':
+                this.drawCircle();
+                break;
+            case 'rectangle':
+                this.drawRectangle();
+                break;
+            default:
+        }
+    };
+
+    drawCircle = () => {
+        this.collageCanvas.add(new fabric.Circle(defaultCircle));
+    };
+
+    drawRectangle = () => {
+        this.collageCanvas.add(new fabric.Rect(defaultRectangle));
+    };
+
+    drawTriangle = () => {
+        this.collageCanvas.add(new fabric.Triangle(defaultTriangle));
+    };
+
+    generateIText = () => {
+        const { text, options } = defaulIText;
+        this.collageCanvas.add(new fabric.IText(text, options));
+    };
+
+    toggleDrawingMode = (option) => {
+        this.collageCanvas.isDrawingMode = (option === 'drawing');
+    };
 
     renderCanvasOptions() {
         const { activeCanvasOption } = this.state;
@@ -74,7 +131,27 @@ class Home extends Component {
             <Aux>
                 <div className={styles.mainHeader}>{MSG_HOME_MAIN_HEADER}</div>
                 <div className={styles.canvasOptions}>{this.renderCanvasOptions()}</div>
-                <CollageCanvas />
+                <canvas id="collage-canvas" className={styles.canvas} />
+                <Grid divided="vertically">
+                    <GridRow columns={2}>
+                        <GridColumn>
+                            <div className={styles.body}>
+                                <div className={styles.bodyHeader}>Instructions</div>
+                                <List as="ol">
+                                    <List.Item as="li">Signing Up</List.Item>
+                                    <List.Item as="li">User Benefits</List.Item>
+                                    <List.Item as="li">User Types</List.Item>
+                                    <List.Item as="li">Deleting Your Account</List.Item>
+                                </List>
+                            </div>
+                        </GridColumn>
+                        <GridColumn>
+                            <div className={styles.body}>
+                                <div className={styles.bodyHeader}>Contribute</div>
+                            </div>
+                        </GridColumn>
+                    </GridRow>
+                </Grid>
             </Aux>
         );
     }

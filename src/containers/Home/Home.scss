@@ -1,15 +1,29 @@
 .mainHeader {
     text-align: center;
     font-size: 16px;
-    padding: 20px 50px 0 50px;
+    padding-top: 20px;
 }
 
 .canvasOptions {
     text-align: center;
-    padding: 30px 0 0 0;
+    padding-top: 30px;
+    padding-bottom: 10px;
 }
 
 .svgIcon {
     width: 14px !important;
     height: 14px;
+}
+
+.canvas {
+    border: 2px solid black;
+}
+
+.body {
+    padding: 30px 0;
+
+    .bodyHeader {
+        font-weight: bold;
+        font-size: 16px;
+    }
 }
