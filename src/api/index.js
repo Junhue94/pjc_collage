@@ -5,7 +5,7 @@ import rest from 'feathers-rest/client';
 import jQuery from 'jquery';
 
 const SERVER_URL = process.env.NODE_ENV === 'production'
-    ? 'http://cms1_5.vaultdragon.com:3040'
+    ? 'https://api.pjccollage.com'
     : 'http://localhost:3090';
 
 /**

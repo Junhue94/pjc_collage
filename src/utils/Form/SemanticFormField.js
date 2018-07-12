@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input } from 'semantic-ui-react';
 
-import styles from './SemanticFormField.css';
+import styles from './SemanticFormField.scss';
 
 /**
  * Semantic UI Form Field

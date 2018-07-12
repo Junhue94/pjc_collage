@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { fabric } from 'fabric';
 import { Menu, Grid, GridRow, GridColumn, List } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import Aux from '../../utils/Auxiliary/Auxiliary';
+import PersonalDetailsForm from '../../components/Home/PersonalDetailsForm';
 import { MSG_HOME_MAIN_HEADER } from '../../localization/en';
 import coneSvg from '../../assets/icon/cone.svg';
 import {
@@ -13,6 +16,7 @@ import {
     defaultImage,
 } from '../../utils/Canvas/helper';
 import styles from './Home.scss';
+import actions from '../../store/actions';
 
 class Home extends Component {
     constructor(props) {
@@ -172,6 +176,7 @@ class Home extends Component {
                         <GridColumn>
                             <div className={styles.body}>
                                 <div className={styles.bodyHeader}>Contribute</div>
+                                <PersonalDetailsForm />
                             </div>
                         </GridColumn>
                     </GridRow>
@@ -181,4 +186,12 @@ class Home extends Component {
     }
 }
 
-export default Home;
+const mapDispatchToProps = (dispatch) => {
+    const { createPersonalDetails } = actions.home;
+
+    return {
+        handleCreatePersonalDetails: bindActionCreators(createPersonalDetails, dispatch),
+    };
+};
+
+export default connect(null, mapDispatchToProps)(Home);

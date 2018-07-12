@@ -4,7 +4,7 @@ import { QUEUE_LIST } from '../query';
 /**
  * Queue Mock Hook
  */
-export const QueueMockHook = {
+const QueueMockHook = {
     before: {
         find(hook) {
             // Return result based on query
