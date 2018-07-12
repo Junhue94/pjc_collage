@@ -30,6 +30,8 @@
             "flatTernaryExpressions": false,
             "ignoredNodes": ["JSXElement", "JSXElement *"]
         }],
+        // ignore line-break rule
+        "linebreak-style": 0,
         // disallow reassignment of function parameters
         // disallow parameter object manipulation except for specific exclusions
         "no-param-reassign": ["error", {
@@ -53,7 +55,7 @@
         }],
         // disallow dangling underscores in identifiers
         "no-underscore-dangle": ["error", {
-            "allow": ["_id"],
+            "allow": ["_id", "_objects"],
             "allowAfterThis": false,
             "allowAfterSuper": false,
             "enforceInMethodNames": false

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, reset } from 'redux-form';
 import { Form } from 'semantic-ui-react';
 
 import Aux from '../../utils/Auxiliary/Auxiliary';
@@ -10,13 +10,19 @@ class PersonalDetailsForm extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.props.initialize({
+            name: null,
+            class: null,
+            email: null,
+        });
     }
 
     render() {
+        const { handleSubmit, createPersonalDetails } = this.props;
+
         return (
             <Aux>
-                <Form>
+                <Form onSubmit={handleSubmit(createPersonalDetails)}>
                     <Field
                         name="name"
                         label="Name"
@@ -51,6 +57,11 @@ class PersonalDetailsForm extends Component {
     }
 }
 
+const clearForm = (result, dispatch) => {
+    dispatch(reset('personalDetailsForm'));
+};
+
 export default reduxForm({
     form: 'personalDetailsForm',
+    onSubmitSuccess: clearForm,
 })(PersonalDetailsForm);

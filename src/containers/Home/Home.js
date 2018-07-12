@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { fabric } from 'fabric';
-import { Menu, Grid, GridRow, GridColumn, List } from 'semantic-ui-react';
+import { Menu, Grid, GridRow, GridColumn, List, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -24,6 +24,7 @@ class Home extends Component {
 
         this.state = {
             activeCanvasOption: null,
+            canvasDrawing: [],
         };
     }
 
@@ -52,6 +53,15 @@ class Home extends Component {
                 break;
             case 'rectangle':
                 this.drawRectangle();
+                break;
+            case 'undo':
+                this.undoDrawing();
+                break;
+            case 'redo':
+                this.redoDrawing();
+                break;
+            case 'clear':
+                this.clearCanvas();
                 break;
             default:
         }
@@ -95,6 +105,27 @@ class Home extends Component {
         this.collageCanvas.isDrawingMode = (option === 'drawing');
     };
 
+    undoDrawing = () => {
+        if (this.collageCanvas._objects.length > 0) {
+            const undoObject = this.collageCanvas._objects.pop();
+            this.setState(prevState => ({
+                canvasDrawing: [...prevState.canvasDrawing, undoObject],
+            }));
+            this.collageCanvas.renderAll();
+        }
+    };
+
+    redoDrawing = () => {
+        if (this.state.canvasDrawing.length > 0) {
+            const redoObject = this.state.canvasDrawing.pop();
+            this.collageCanvas.add(redoObject);
+        }
+    };
+
+    clearCanvas = () => {
+        this.collageCanvas.clear();
+    };
+
     renderCanvasOptions() {
         const { activeCanvasOption } = this.state;
 
@@ -114,7 +145,7 @@ class Home extends Component {
                 >
                     <i className="fa fa-text-width" aria-hidden="true" />
                 </Menu.Item>
-                <label htmlFor="imageUpload">
+                <label htmlFor="imageUpload" className={styles.canvasOption}>
                     <Menu.Item
                         name="image"
                         active={activeCanvasOption === 'image'}
@@ -150,6 +181,32 @@ class Home extends Component {
                 >
                     <i className="fa fa-square" aria-hidden="true" />
                 </Menu.Item>
+                <div className={styles.canvasOptionDisabled}>
+                    <Menu.Item disabled>
+                        <Icon inverted color="grey" name="square" />
+                    </Menu.Item>
+                </div>
+                <Menu.Item
+                    name="undo"
+                    active={activeCanvasOption === 'undo'}
+                    onClick={this.handleCanvasOptionsClick}
+                >
+                    <i className="fa fa-undo" aria-hidden="true" />
+                </Menu.Item>
+                <Menu.Item
+                    name="redo"
+                    active={activeCanvasOption === 'redo'}
+                    onClick={this.handleCanvasOptionsClick}
+                >
+                    <i className="fa fa-repeat" aria-hidden="true" />
+                </Menu.Item>
+                <Menu.Item
+                    name="clear"
+                    active={activeCanvasOption === 'clear'}
+                    onClick={this.handleCanvasOptionsClick}
+                >
+                    <i className="fa fa-trash" aria-hidden="true" />
+                </Menu.Item>
             </Menu>
         );
     }
@@ -176,7 +233,9 @@ class Home extends Component {
                         <GridColumn>
                             <div className={styles.body}>
                                 <div className={styles.bodyHeader}>Contribute</div>
-                                <PersonalDetailsForm />
+                                <PersonalDetailsForm
+                                    createPersonalDetails={this.props.createPersonalDetails}
+                                />
                             </div>
                         </GridColumn>
                     </GridRow>
@@ -190,7 +249,7 @@ const mapDispatchToProps = (dispatch) => {
     const { createPersonalDetails } = actions.home;
 
     return {
-        handleCreatePersonalDetails: bindActionCreators(createPersonalDetails, dispatch),
+        createPersonalDetails: bindActionCreators(createPersonalDetails, dispatch),
     };
 };
 
