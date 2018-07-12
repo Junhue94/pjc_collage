@@ -4,6 +4,7 @@ export const createPersonalDetails = {
     class: '12S22',
     email: 'tan_boon_piang@test.com',
     createdOn: 1511848298000,
+    drawing: [],
 };
 
 export const findPersonalDetails = [
@@ -13,6 +14,7 @@ export const findPersonalDetails = [
         class: '12S22',
         email: 'tan_boon_piang@test.com',
         createdOn: 1511848298000,
+        drawing: [],
     },
     {
         _id: '2',
@@ -20,6 +22,7 @@ export const findPersonalDetails = [
         class: '08S08',
         email: 'adilah_nur@test.com',
         createdOn: 1511848298000,
+        drawing: [],
     },
     {
         _id: '3',
@@ -27,6 +30,7 @@ export const findPersonalDetails = [
         class: '06A02',
         email: 'navindran@test.com',
         createdOn: 1511848298000,
+        drawing: [],
     },
     {
         _id: '4',
@@ -34,5 +38,6 @@ export const findPersonalDetails = [
         class: '14S02',
         email: 'lee_mun_kin@test.com',
         createdOn: 1511848298000,
+        drawing: [],
     },
 ];

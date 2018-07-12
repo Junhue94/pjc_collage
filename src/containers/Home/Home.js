@@ -83,6 +83,15 @@ class Home extends Component {
         reader.readAsDataURL(e.target.files[0]);
     };
 
+    handleCreatePersonalDetails = (personalDetails) => {
+        this.props.createPersonalDetails({
+            ...personalDetails,
+            drawing: this.collageCanvas.toJSON().objects,
+        });
+        this.setState({ canvasDrawing: [] });
+        this.clearCanvas();
+    };
+
     drawCircle = () => {
         this.collageCanvas.add(new fabric.Circle(defaultCircle));
     };
@@ -234,7 +243,7 @@ class Home extends Component {
                             <div className={styles.body}>
                                 <div className={styles.bodyHeader}>Contribute</div>
                                 <PersonalDetailsForm
-                                    createPersonalDetails={this.props.createPersonalDetails}
+                                    createPersonalDetails={this.handleCreatePersonalDetails}
                                 />
                             </div>
                         </GridColumn>
