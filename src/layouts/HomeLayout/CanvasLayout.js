@@ -3,9 +3,9 @@ import { Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 
 import AppHeader from '../../components/Menu/AppHeader';
-import styles from './HomeLayout.scss';
+import styles from './CanvasLayout.scss';
 
-const HomeLayout = ({ component: Component, ...rest }) => (
+const CanvasLayout = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={matchProps => (
@@ -19,4 +19,4 @@ const HomeLayout = ({ component: Component, ...rest }) => (
     />
 );
 
-export default HomeLayout;
+export default CanvasLayout;

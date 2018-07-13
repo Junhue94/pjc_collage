@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, Grid, Segment, Image } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 import styles from './Login.scss';
 import phoenixIcon from '../../assets/image/phoenixIcon.png';
@@ -40,6 +41,8 @@ const Login = () => (
                             color="red"
                             fluid
                             size="large"
+                            as={Link}
+                            to="/pegasus"
                         >Log In
                         </Button>
                     </Segment>
