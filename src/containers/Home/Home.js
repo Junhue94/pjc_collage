@@ -133,6 +133,7 @@ class Home extends Component {
 
     clearCanvas = () => {
         this.collageCanvas.clear();
+        this.setState({ canvasDrawing: [] });
     };
 
     renderCanvasOptions() {

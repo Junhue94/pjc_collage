@@ -3,7 +3,9 @@ import { Switch } from 'react-router-dom';
 
 import HomeLayout from './layouts/HomeLayout/HomeLayout';
 import ErrorLayout from './layouts/ErrorLayout/ErrorLayout';
+import LoginLayout from './layouts/LoginLayout/LoginLayout';
 import AppLayout from './layouts/AppLayout/AppLayout';
+import Login from './components/Login/Login';
 import Error from './components/Error/Error';
 import Queue from './components/Queue/Queue';
 import NotificationSystem from './components/Notification/NotificationSystem';
@@ -19,6 +21,7 @@ const App = () => (
     <Aux>
         <NotificationSystem />
         <Switch>
+            <LoginLayout path="/phoenix" component={Login} />
             <AppLayout exact path="/queue" component={Queue} />
             <AppLayout exact path="/settings/category" component={CategorySettings} />
             <HomeLayout exact path="/" component={Home} />
