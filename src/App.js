@@ -5,12 +5,10 @@ import CanvasLayout from './layouts/HomeLayout/CanvasLayout';
 import PageLayout from './layouts/HomeLayout/PageLayout';
 import ErrorLayout from './layouts/ErrorLayout/ErrorLayout';
 import LoginLayout from './layouts/LoginLayout/LoginLayout';
-import AppLayout from './layouts/AppLayout/AppLayout';
 import DashboardLayout from './layouts/DashboardLayout/DashboardLayout';
 import Login from './components/Login/Login';
 import Error from './components/Error/Error';
 import NotificationSystem from './components/Notification/NotificationSystem';
-import CategorySettings from './containers/Settings/Category/Category';
 import Aux from './utils/Auxiliary/Auxiliary';
 import Home from './containers/Home/Home';
 import User from './containers/User/User';
@@ -29,7 +27,6 @@ const App = () => (
             <LoginLayout exact path="/phoenix" component={Login} />
             <DashboardLayout exact path="/pegasus" component={User} />
             <DashboardLayout exact path="/pegasus/task" component={Task} />
-            <AppLayout exact path="/settings/category" component={CategorySettings} />
             <PageLayout exact path="/faq" component={Faq} />
             <PageLayout exact path="/contact" component={ContactUs} />
             <CanvasLayout exact path="/" component={Home} />
