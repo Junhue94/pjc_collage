@@ -1,5 +1,5 @@
-import { CATEGORY_SETTINGS_SERVICE } from '../services';
-import categorySettingsMockHook from '../_mock/settings/category-mock-hook';
+import { CATEGORY_SETTINGS_SERVICE } from './services';
+import categorySettingsMockHook from './_mock/settings/category-mock-hook';
 
 /**
  * API Category Settings Service
@@ -19,7 +19,7 @@ class CategorySettingsService {
     createCategory(categoryDetails) {
         return this.service.create(categoryDetails);
     }
-    
+
     /**
      * Get Category
      * @param id

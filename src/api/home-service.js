@@ -12,10 +12,6 @@ class HomeService {
     createPersonalDetails(personalDetails) {
         return this.service.create(personalDetails);
     }
-
-    findPersonalDetails(params) {
-        return this.service.find({ params });
-    }
 }
 
 export default HomeService;

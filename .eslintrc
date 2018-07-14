@@ -8,6 +8,7 @@
         "react"
     ],
     "rules": {
+        "import/prefer-default-export": "off",
         // this option sets a specific tab width for your code
         "indent": ["error", 4, {
             "SwitchCase": 1,

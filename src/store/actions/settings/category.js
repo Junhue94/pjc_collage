@@ -1,6 +1,6 @@
 import * as actionTypes from '../actionTypes';
 import { successNotification, errorNotification } from '../../../utils/Notification/notificationType';
-import CategorySettingsService from '../../../api/settings/category-service';
+import CategorySettingsService from '../../../api/category-service';
 import { CATEGORY_SETTINGS_LIST } from '../../../api/_mock/query';
 
 // Create service class

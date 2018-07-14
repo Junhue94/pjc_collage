@@ -1,63 +1,22 @@
-import React, { Component } from 'react';
-import { Icon, Menu } from 'semantic-ui-react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { Menu } from 'semantic-ui-react';
 
 import Aux from '../../utils/Auxiliary/Auxiliary';
+import styles from './DashboardMenu.scss';
 
-class DashboardMenu extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            activeMenu: null,
-        };
-    }
-
-    handleMenuClick = (e, { name }) => this.setState({ activeMenu: name });
-
-    render() {
-        const { activeMenu } = this.state;
-
-        return (
-            <Aux>
-                <Menu
-                    icon="labeled"
-                    vertical
-                >
-                    <Menu.Item
-                        name="user"
-                        active={activeMenu === 'user'}
-                        onClick={this.handleMenuClick}
-                        as={Link}
-                        to="/pegasus"
-                    >
-                        <Icon name="users" />
-                        Users
-                    </Menu.Item>
-                    <Menu.Item
-                        name="task"
-                        active={activeMenu === 'task'}
-                        onClick={this.handleMenuClick}
-                        as={Link}
-                        to="/pegasus/task"
-                    >
-                        <Icon name="tasks" />
-                        Tasks
-                    </Menu.Item>
-                    <Menu.Item
-                        name="logOut"
-                        active={activeMenu === 'logOut'}
-                        onClick={this.handleMenuClick}
-                        as={Link}
-                        to="/phoenix"
-                    >
-                        <Icon name="log out" />
-                        Log Out
-                    </Menu.Item>
-                </Menu>
-            </Aux>
-        );
-    }
-}
+const DashboardMenu = () => (
+    <Aux>
+        <div className={styles.header}>
+            <Menu size="large" fixed="top">
+                <Menu.Item as={Link} to="/pegasus" name="Users" />
+                <Menu.Item as={Link} to="/pegasus/task" name="Tasks" />
+                <Menu.Menu position="right">
+                    <Menu.Item as={Link} to="/phoenix" name="Log Out" />
+                </Menu.Menu>
+            </Menu>
+        </div>
+    </Aux>
+);
 
 export default DashboardMenu;
