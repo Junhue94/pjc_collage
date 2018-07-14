@@ -1,6 +1,5 @@
-// Settings
-export const SET_CATEGORY_SETTINGS_LIST = 'SET_CATEGORY_SETTINGS_LIST';
-export const SET_CATEGORY_CONTENT = 'SET_CATEGORY_CONTENT';
-
 // User
 export const SET_USER_LIST = 'SET_USER_LIST';
+
+// Task
+export const SET_TASK_LIST = 'SET_TASK_LIST';

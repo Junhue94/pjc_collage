@@ -5,4 +5,5 @@ export const createPersonalDetails = {
     email: 'tan_boon_piang@test.com',
     createdOn: 1511848298000,
     drawing: [],
+    status: 'pending',
 };

@@ -58,8 +58,8 @@ class User extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    userList: state.user.userList,
+const mapStateToProps = ({ user }) => ({
+    userList: user.userList,
 });
 
 const mapDispatchToProps = (dispatch) => {
