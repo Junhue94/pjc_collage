@@ -1,9 +1,12 @@
-import { findTask } from './task-mock-result';
+import { FIND_TASK, UPDATE_TASK } from './task-mock-result';
 
 const TaskMockHook = {
     before: {
         find(hook) {
-            hook.result = findTask;
+            hook.result = FIND_TASK;
+        },
+        update(hook) {
+            hook.result = UPDATE_TASK;
         },
     },
 };

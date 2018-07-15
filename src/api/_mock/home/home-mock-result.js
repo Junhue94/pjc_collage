@@ -1,4 +1,4 @@
-export const createPersonalDetails = {
+export const CREATE_PERSONAL_DETAILS = {
     _id: '1',
     name: 'Tan Boon Piang',
     class: '12S22',

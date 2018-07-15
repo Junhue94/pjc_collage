@@ -1,4 +1,4 @@
-export const findUser = [
+export const FIND_USER = [
     {
         _id: '1',
         name: 'Tan Boon Piang',

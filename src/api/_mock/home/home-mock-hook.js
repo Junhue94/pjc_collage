@@ -1,9 +1,9 @@
-import { createPersonalDetails } from './home-mock-result';
+import { CREATE_PERSONAL_DETAILS } from './home-mock-result';
 
 const HomeMockHook = {
     before: {
         create(hook) {
-            hook.result = createPersonalDetails;
+            hook.result = CREATE_PERSONAL_DETAILS;
         },
     },
 };

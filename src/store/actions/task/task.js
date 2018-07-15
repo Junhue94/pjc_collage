@@ -1,6 +1,6 @@
 import { SET_TASK_LIST } from '../actionTypes';
 import TaskService from '../../../api/task-service';
-import { errorNotification } from '../../../utils/Notification/notificationType';
+import { successNotification, errorNotification } from '../../../utils/Notification/notificationType';
 
 const taskService = new TaskService();
 
@@ -16,4 +16,13 @@ export const findTask = params => dispatch => taskService
     })
     .catch((error) => {
         dispatch(errorNotification('Fail to retrieve task list', error));
+    });
+
+export const updateTask = taskDetails => dispatch => taskService
+    .updateTask(taskDetails)
+    .then(() => {
+        dispatch(successNotification('Task', 'Task updated successfully!'));
+    })
+    .catch((error) => {
+        dispatch(errorNotification('Fail to update task', error));
     });

@@ -3,12 +3,14 @@ import { fabric } from 'fabric';
 import { Menu, Grid, GridRow, GridColumn, List, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import isEmpty from 'lodash/isEmpty';
 
 import Aux from '../../utils/Auxiliary/Auxiliary';
 import PersonalDetailsForm from '../../components/Home/PersonalDetailsForm';
 import { MSG_HOME_MAIN_HEADER } from '../../localization/en';
 import coneSvg from '../../assets/icon/cone.svg';
 import {
+    defaultCanvas,
     defaultCircle,
     defaultRectangle,
     defaultTriangle,
@@ -29,12 +31,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        const width = 1120;
-        const height = 630;
-        this.collageCanvas = new fabric.Canvas('collage-canvas', {
-            width,
-            height,
-        });
+        this.collageCanvas = new fabric.Canvas('collage-canvas', defaultCanvas);
     }
 
     handleCanvasOptionsClick = (e, { name }) => {
@@ -80,7 +77,9 @@ class Home extends Component {
                 this.collageCanvas.renderAll();
             };
         };
-        reader.readAsDataURL(e.target.files[0]);
+        if (!isEmpty(e.target.files)) {
+            reader.readAsDataURL(e.target.files[0]);
+        }
     };
 
     handleCreatePersonalDetails = (personalDetails) => {

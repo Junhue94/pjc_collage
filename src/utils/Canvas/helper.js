@@ -1,3 +1,8 @@
+export const defaultCanvas = {
+    width: 1120,
+    height: 630,
+};
+
 export const defaultCircle = {
     radius: 50,
     fill: '#f54043',

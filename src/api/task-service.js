@@ -12,6 +12,10 @@ class TaskService {
     findTask(params) {
         return this.service.find({ params });
     }
+
+    updateTask(taskDetails) {
+        return this.service.update(taskDetails._id, taskDetails);
+    }
 }
 
 export default TaskService;

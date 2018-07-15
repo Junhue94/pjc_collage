@@ -1,9 +1,9 @@
-import { findUser } from './user-mock-result';
+import { FIND_USER } from './user-mock-result';
 
 const UserMockHook = {
     before: {
         find(hook) {
-            hook.result = findUser;
+            hook.result = FIND_USER;
         },
     },
 };

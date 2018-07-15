@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Menu, Header } from 'semantic-ui-react';
+import { Menu, Header, Button, Confirm } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { fabric } from 'fabric';
+import find from 'lodash/find';
 
 import styles from './Task.scss';
 import actions from '../../store/actions';
+import { defaultCanvas } from '../../utils/Canvas/helper';
 
 class Task extends Component {
     constructor(props) {
@@ -14,14 +17,82 @@ class Task extends Component {
         findTask({});
 
         this.state = {
-            activeTask: null,
+            activeTaskId: null,
+            activeTaskDetails: null,
+            modalApprove: false,
+            modalReject: false,
         };
     }
 
-    handleTaskClick = (e, { id }) => this.setState({ activeTask: id });
+    componentDidMount() {
+        this.taskCanvas = new fabric.StaticCanvas('task-canvas', defaultCanvas);
+    }
+
+    handleTaskClick = (e, { id }) => {
+        const { taskList } = this.props;
+        const activeTaskDetails = find(taskList, { _id: id });
+        const canvasObject = JSON.stringify({ objects: activeTaskDetails.drawing });
+
+        this.clearCanvas();
+        this.setState({ activeTaskId: id });
+        this.setState({ activeTaskDetails });
+        this.taskCanvas.loadFromJSON(canvasObject, this.taskCanvas.renderAll.bind(this.taskCanvas));
+    };
+
+    handleTaskApprove = () => {
+        const { updateTask, findTask } = this.props;
+        const { activeTaskDetails } = this.state;
+
+        updateTask({
+            ...activeTaskDetails,
+            status: 'approved',
+        });
+        findTask({});
+        this.toggleModalApprove();
+        this.resetActiveTaskId();
+        this.clearCanvas();
+        this.scrollToTop();
+    };
+
+    handleTaskReject = () => {
+        const { updateTask, findTask } = this.props;
+        const { activeTaskDetails } = this.state;
+
+        updateTask({
+            ...activeTaskDetails,
+            status: 'rejected',
+        });
+        findTask({});
+        this.toggleModalReject();
+        this.resetActiveTaskId();
+        this.clearCanvas();
+        this.scrollToTop();
+    };
+
+    scrollToTop = () => {
+        window.scrollTo(0, 0);
+    };
+
+    toggleModalApprove = () => {
+        const newStatus = !this.state.modalApprove;
+        this.setState({ modalApprove: newStatus });
+    };
+
+    toggleModalReject = () => {
+        const newStatus = !this.state.modalReject;
+        this.setState({ modalReject: newStatus });
+    };
+
+    resetActiveTaskId = () => {
+        this.setState({ activeTaskId: null });
+    };
+
+    clearCanvas = () => {
+        this.taskCanvas.clear();
+    };
 
     renderTaskList = () => {
-        const { activeTask } = this.state;
+        const { activeTaskId } = this.state;
         const { taskList } = this.props;
 
         return (
@@ -31,7 +102,7 @@ class Task extends Component {
                         id={task._id}
                         key={task._id}
                         name={task.name}
-                        active={activeTask === `${task._id}`}
+                        active={activeTaskId === `${task._id}`}
                         onClick={this.handleTaskClick}
                     >
                         <div className={styles.taskName}>{task.name}</div>
@@ -44,12 +115,48 @@ class Task extends Component {
     };
 
     render() {
+        const { modalApprove, modalReject } = this.state;
+
         return (
             <div className={styles.container}>
                 {this.renderTaskList()}
                 <div className={styles.content}>
-                    <div>
-                        <Header as="h1">Contribution Vetting</Header>
+                    <Header as="h1">Contribution Vetting</Header>
+                    <canvas id="task-canvas" className={styles.canvas} />
+                    <div className={styles.decisionButton}>
+                        <Button.Group fluid size="large">
+                            <Button
+                                positive
+                                onClick={this.toggleModalApprove}
+                            >Approve
+                            </Button>
+                            <Confirm
+                                header="APPROVAL"
+                                content="Confirm APPROVE this contribution?"
+                                cancelButton="Cancel"
+                                confirmButton="Approve"
+                                open={modalApprove}
+                                onCancel={this.toggleModalApprove}
+                                onConfirm={this.handleTaskApprove}
+                                size="tiny"
+                            />
+                            <Button.Or />
+                            <Button
+                                negative
+                                onClick={this.toggleModalReject}
+                            >Reject
+                            </Button>
+                            <Confirm
+                                header="REJECTION"
+                                content="Confirm REJECT this contribution?"
+                                cancelButton="Cancel"
+                                confirmButton="Reject"
+                                open={modalReject}
+                                onCancel={this.toggleModalReject}
+                                onConfirm={this.handleTaskReject}
+                                size="tiny"
+                            />
+                        </Button.Group>
                     </div>
                 </div>
             </div>
@@ -62,10 +169,11 @@ const mapStateToProps = ({ task }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => {
-    const { findTask } = actions.task;
+    const { findTask, updateTask } = actions.task;
 
     return {
         findTask: bindActionCreators(findTask, dispatch),
+        updateTask: bindActionCreators(updateTask, dispatch),
     };
 };
 
