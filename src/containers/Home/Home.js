@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { fabric } from 'fabric';
-import { Menu, Grid, GridRow, GridColumn, List, Icon } from 'semantic-ui-react';
+import { Menu, Grid, GridRow, GridColumn, List, Icon, Confirm } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import isEmpty from 'lodash/isEmpty';
@@ -26,6 +26,7 @@ class Home extends Component {
 
         this.state = {
             activeCanvasOption: null,
+            modalClearCanvas: false,
             canvasDrawing: [],
         };
     }
@@ -132,11 +133,19 @@ class Home extends Component {
 
     clearCanvas = () => {
         this.collageCanvas.clear();
-        this.setState({ canvasDrawing: [] });
+        this.setState({
+            canvasDrawing: [],
+            modalClearCanvas: false,
+        });
+    };
+
+    toggleModalClearCanvas = () => {
+        const newStatus = !this.state.modalClearCanvas;
+        this.setState({ modalClearCanvas: newStatus });
     };
 
     renderCanvasOptions() {
-        const { activeCanvasOption } = this.state;
+        const { activeCanvasOption, modalClearCanvas } = this.state;
 
         return (
             <Menu compact icon>
@@ -212,10 +221,19 @@ class Home extends Component {
                 <Menu.Item
                     name="clear"
                     active={activeCanvasOption === 'clear'}
-                    onClick={this.handleCanvasOptionsClick}
+                    onClick={this.toggleModalClearCanvas}
                 >
                     <i className="fa fa-trash" aria-hidden="true" />
                 </Menu.Item>
+                <Confirm
+                    content="All objects on canvas will be removed. Confirm clear canvas?"
+                    cancelButton="Cancel"
+                    confirmButton="Confirm"
+                    open={modalClearCanvas}
+                    onCancel={this.toggleModalClearCanvas}
+                    onConfirm={this.clearCanvas}
+                    size="tiny"
+                />
             </Menu>
         );
     }

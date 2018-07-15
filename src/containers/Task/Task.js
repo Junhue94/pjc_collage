@@ -48,8 +48,7 @@ class Task extends Component {
             status: 'approved',
         });
         findTask({});
-        this.toggleModalApprove();
-        this.resetActiveTaskId();
+        this.resetState();
         this.clearCanvas();
         this.scrollToTop();
     };
@@ -63,8 +62,7 @@ class Task extends Component {
             status: 'rejected',
         });
         findTask({});
-        this.toggleModalReject();
-        this.resetActiveTaskId();
+        this.resetState();
         this.clearCanvas();
         this.scrollToTop();
     };
@@ -83,13 +81,22 @@ class Task extends Component {
         this.setState({ modalReject: newStatus });
     };
 
-    resetActiveTaskId = () => {
-        this.setState({ activeTaskId: null });
+    resetState = () => {
+        const state = {
+            activeTaskId: null,
+            activeTaskDetails: null,
+            modalApprove: false,
+            modalReject: false,
+        };
+
+        this.setState({ ...state });
     };
 
     clearCanvas = () => {
         this.taskCanvas.clear();
     };
+
+    hasActiveTask = () => !this.state.activeTaskDetails;
 
     renderTaskList = () => {
         const { activeTaskId } = this.state;
@@ -105,8 +112,8 @@ class Task extends Component {
                         active={activeTaskId === `${task._id}`}
                         onClick={this.handleTaskClick}
                     >
-                        <div className={styles.taskName}>{task.name}</div>
-                        <div className={styles.taskClass}>{task.class}</div>
+                        <div className={styles.taskName}>{task.name} / {task.class}</div>
+                        <div className={styles.taskCreatedOn}>{task.createdOn}</div>
                         <div className={styles.taskEmail}>{task.email}</div>
                     </Menu.Item>
                 ))}
@@ -127,6 +134,7 @@ class Task extends Component {
                         <Button.Group fluid size="large">
                             <Button
                                 positive
+                                disabled={this.hasActiveTask()}
                                 onClick={this.toggleModalApprove}
                             >Approve
                             </Button>
@@ -143,6 +151,7 @@ class Task extends Component {
                             <Button.Or />
                             <Button
                                 negative
+                                disabled={this.hasActiveTask()}
                                 onClick={this.toggleModalReject}
                             >Reject
                             </Button>

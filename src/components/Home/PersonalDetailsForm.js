@@ -29,6 +29,7 @@ class PersonalDetailsForm extends Component {
                         component={SemanticFormField}
                         as={Form.Input}
                         type="text"
+                        autoComplete="off"
                         validate={required}
                     />
                     <Field
@@ -37,6 +38,7 @@ class PersonalDetailsForm extends Component {
                         component={SemanticFormField}
                         as={Form.Input}
                         type="text"
+                        autoComplete="off"
                         validate={required}
                     />
                     <Field
@@ -45,6 +47,7 @@ class PersonalDetailsForm extends Component {
                         component={SemanticFormField}
                         as={Form.Input}
                         type="text"
+                        autoComplete="off"
                         validate={email}
                     />
                     <Form.Button
