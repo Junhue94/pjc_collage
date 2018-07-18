@@ -3,7 +3,7 @@ import HomeService from '../../../api/home-service';
 
 const homeService = new HomeService();
 
-export const createPersonalDetails = personalDetails => dispatch => homeService
+export const createPersonalDetails = personalDetails => async dispatch => homeService
     .createPersonalDetails(personalDetails)
     .then(() => {
         dispatch(successNotification('Personal Details', 'Details saved successfully!'));

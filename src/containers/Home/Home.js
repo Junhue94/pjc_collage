@@ -16,7 +16,6 @@ import {
     defaultTriangle,
     defaulIText,
     defaultImage,
-    generateImageKey,
 } from '../../utils/Canvas/helper';
 import styles from './Home.scss';
 import actions from '../../store/actions';
