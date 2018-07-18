@@ -16,6 +16,7 @@ import {
     defaultTriangle,
     defaulIText,
     defaultImage,
+    generateImageKey,
 } from '../../utils/Canvas/helper';
 import styles from './Home.scss';
 import actions from '../../store/actions';
@@ -66,7 +67,9 @@ class Home extends Component {
     };
 
     handleImageUpload = (e) => {
+        const imageFile = e.target.files;
         const reader = new FileReader();
+
         reader.onload = (readerEvent) => {
             const imgObj = new Image();
             imgObj.src = readerEvent.target.result;
@@ -78,12 +81,16 @@ class Home extends Component {
                 this.collageCanvas.renderAll();
             };
         };
-        if (!isEmpty(e.target.files)) {
-            reader.readAsDataURL(e.target.files[0]);
+        if (!isEmpty(imageFile)) {
+            reader.readAsDataURL(imageFile[0]);
         }
     };
 
     handleCreatePersonalDetails = (personalDetails) => {
+        // TODO if array state for image not empty
+        // TODO call action to upload endpoint with image key
+        // TODO remove image from fabric object and add image key using utils
+        // TODO upload personal details
         this.props.createPersonalDetails({
             ...personalDetails,
             drawing: this.collageCanvas.toJSON().objects,

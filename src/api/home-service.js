@@ -10,6 +10,7 @@ class HomeService {
     }
 
     createPersonalDetails(personalDetails) {
+        console.log('personalDetails', JSON.stringify(personalDetails));
         return this.service.create(personalDetails);
     }
 }
