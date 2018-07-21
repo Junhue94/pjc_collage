@@ -279,9 +279,11 @@ class Home extends Component {
 
 const mapDispatchToProps = (dispatch) => {
     const { createPersonalDetails } = actions.home;
+    const { createImage } = actions.upload;
 
     return {
         createPersonalDetails: bindActionCreators(createPersonalDetails, dispatch),
+        createImage: bindActionCreators(createImage, dispatch),
     };
 };
 

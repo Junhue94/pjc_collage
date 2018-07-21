@@ -9,7 +9,7 @@ class UploadService {
         }
     }
 
-    create(image) {
+    createImage(image) {
         return this.service.create(image);
     }
 }
