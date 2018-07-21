@@ -69,6 +69,9 @@ class Home extends Component {
         const imageFile = e.target.files;
         const reader = new FileReader();
 
+        // TODO Send image to upload at API
+        // TODO Set fabric Image src as image url
+
         reader.onload = (readerEvent) => {
             const imgObj = new Image();
             imgObj.src = readerEvent.target.result;
@@ -86,10 +89,6 @@ class Home extends Component {
     };
 
     handleCreatePersonalDetails = (personalDetails) => {
-        // TODO if array state for image not empty
-        // TODO call action to upload endpoint with image key
-        // TODO remove image from fabric object and add image key using utils
-        // TODO upload personal details
         this.props.createPersonalDetails({
             ...personalDetails,
             drawing: this.collageCanvas.toJSON().objects,

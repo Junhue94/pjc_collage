@@ -3,7 +3,7 @@ import HomeService from '../../../api/home-service';
 
 const homeService = new HomeService();
 
-export const createPersonalDetails = personalDetails => async dispatch => homeService
+export const createPersonalDetails = personalDetails => dispatch => homeService
     .createPersonalDetails(personalDetails)
     .then(() => {
         dispatch(successNotification('Personal Details', 'Details saved successfully!'));
@@ -11,4 +11,3 @@ export const createPersonalDetails = personalDetails => async dispatch => homeSe
     .catch((error) => {
         dispatch(errorNotification('Fail to save personal details', error));
     });
-
