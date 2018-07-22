@@ -3,7 +3,6 @@ import { fabric } from 'fabric';
 import { Menu, Grid, GridRow, GridColumn, List, Icon, Confirm } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import isEmpty from 'lodash/isEmpty';
 
 import Aux from '../../utils/Auxiliary/Auxiliary';
 import PersonalDetailsForm from '../../components/Home/PersonalDetailsForm';
@@ -33,6 +32,21 @@ class Home extends Component {
 
     componentDidMount() {
         this.collageCanvas = new fabric.Canvas('collage-canvas', defaultCanvas);
+    }
+
+    componentDidUpdate(prevProps) {
+        const { image } = this.props;
+        if (prevProps.image.url !== image.url) {
+            const imgObj = new Image();
+            imgObj.src = image.url;
+            imgObj.onload = () => {
+                const fabricImage = new fabric.Image(imgObj);
+                fabricImage.set(defaultImage);
+                this.collageCanvas.centerObject(fabricImage);
+                this.collageCanvas.add(fabricImage);
+                this.collageCanvas.renderAll();
+            };
+        }
     }
 
     handleCanvasOptionsClick = (e, { name }) => {
@@ -67,24 +81,9 @@ class Home extends Component {
 
     handleImageUpload = (e) => {
         const imageFile = e.target.files;
-        const reader = new FileReader();
 
-        // TODO Send image to upload at API
-        // TODO Set fabric Image src as image url
-
-        reader.onload = (readerEvent) => {
-            const imgObj = new Image();
-            imgObj.src = readerEvent.target.result;
-            imgObj.onload = () => {
-                const image = new fabric.Image(imgObj);
-                image.set(defaultImage);
-                this.collageCanvas.centerObject(image);
-                this.collageCanvas.add(image);
-                this.collageCanvas.renderAll();
-            };
-        };
-        if (!isEmpty(imageFile)) {
-            reader.readAsDataURL(imageFile[0]);
+        if (imageFile.length > 0) {
+            this.props.createImage(imageFile);
         }
     };
 
@@ -277,6 +276,10 @@ class Home extends Component {
     }
 }
 
+const mapStateToProps = ({ upload }) => ({
+    image: upload.image,
+});
+
 const mapDispatchToProps = (dispatch) => {
     const { createPersonalDetails } = actions.home;
     const { createImage } = actions.upload;
@@ -287,4 +290,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -9,8 +9,8 @@ class UploadService {
         }
     }
 
-    createImage(image) {
-        return this.service.create(image);
+    createImage(imageFile) {
+        return this.service.create(imageFile);
     }
 }
 

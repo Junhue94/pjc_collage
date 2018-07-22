@@ -39,8 +39,6 @@ export const defaulIText = {
 };
 
 export const defaultImage = {
-    left: 500,
-    top: 300,
     angle: 0,
     opacity: 1,
 };
