@@ -83,7 +83,9 @@ class Home extends Component {
         const imageFile = e.target.files;
 
         if (imageFile.length > 0) {
-            this.props.createImage(imageFile);
+            this.props.createAssetTmp({
+                file: imageFile,
+            });
         }
     };
 
@@ -282,11 +284,11 @@ const mapStateToProps = ({ upload }) => ({
 
 const mapDispatchToProps = (dispatch) => {
     const { createPersonalDetails } = actions.home;
-    const { createImage } = actions.upload;
+    const { createAssetTmp } = actions.upload;
 
     return {
         createPersonalDetails: bindActionCreators(createPersonalDetails, dispatch),
-        createImage: bindActionCreators(createImage, dispatch),
+        createAssetTmp: bindActionCreators(createAssetTmp, dispatch),
     };
 };
 

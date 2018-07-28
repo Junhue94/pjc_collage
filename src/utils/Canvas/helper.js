@@ -1,6 +1,3 @@
-import moment from 'moment';
-import uuidv4 from 'uuid/v4';
-
 export const defaultCanvas = {
     width: 1120,
     height: 630,
@@ -41,10 +38,4 @@ export const defaulIText = {
 export const defaultImage = {
     angle: 0,
     opacity: 1,
-};
-
-export const generateImageKey = () => {
-    const timestamp = moment().format('x');
-    const uuid = uuidv4();
-    return `${timestamp}_${uuid}`;
 };

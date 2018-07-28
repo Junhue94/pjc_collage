@@ -9,8 +9,8 @@ class UploadService {
         }
     }
 
-    createImage(imageFile) {
-        return this.service.create(imageFile);
+    createAssetTmp(assetTmp) {
+        return this.service.create(assetTmp);
     }
 }
 

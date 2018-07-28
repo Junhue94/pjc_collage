@@ -1,9 +1,9 @@
-import { CREATE_UPLOAD } from './upload-mock-result';
+import { CREATE_ASSET_TMP } from './upload-mock-result';
 
 const UploadMockHook = {
     before: {
         create(hook) {
-            hook.result = CREATE_UPLOAD;
+            hook.result = CREATE_ASSET_TMP;
         },
     },
 };
