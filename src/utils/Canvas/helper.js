@@ -26,7 +26,7 @@ export const defaultTriangle = {
     top: 100,
 };
 
-export const defaulIText = {
+export const defaultText = {
     text: 'Type something meaningful...',
     options: {
         left: 100,
@@ -38,4 +38,21 @@ export const defaulIText = {
 export const defaultImage = {
     angle: 0,
     opacity: 1,
+};
+
+export const defaultCollage = {
+    format: 'png',
+    left: 0,
+    top: 0,
+    width: 1120,
+    height: 630,
+};
+
+export const dataURItoBlob = (dataURI) => {
+    const binary = atob(dataURI.split(',')[1]);
+    const array = [];
+    for (let i = 0; i < binary.length; i += 1) {
+        array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], { type: 'image/png' });
 };

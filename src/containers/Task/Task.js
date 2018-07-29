@@ -4,17 +4,23 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fabric } from 'fabric';
 import find from 'lodash/find';
+import has from 'lodash/has';
 
 import styles from './Task.scss';
 import actions from '../../store/actions';
-import { defaultCanvas } from '../../utils/Canvas/helper';
+import {
+    defaultCanvas,
+    defaultCollage,
+    dataURItoBlob,
+} from '../../utils/Canvas/helper';
 
 class Task extends Component {
     constructor(props) {
         super(props);
 
-        const { findTask } = this.props;
+        const { findTask, findCollage } = this.props;
         findTask({});
+        findCollage({});
 
         this.state = {
             activeTaskId: null,
@@ -26,6 +32,21 @@ class Task extends Component {
 
     componentDidMount() {
         this.taskCanvas = new fabric.StaticCanvas('task-canvas', defaultCanvas);
+        this.collageCanvas = new fabric.StaticCanvas('collage-canvas', defaultCanvas);
+    }
+
+    componentDidUpdate() {
+        const { collage } = this.props;
+
+        if (has(collage, 'url')) {
+            fabric.util.loadImage(collage.url, (imgObj) => {
+                const backgroundImage = new fabric.Image(imgObj);
+                this.collageCanvas.setBackgroundImage(
+                    backgroundImage,
+                    this.collageCanvas.renderAll.bind(this.collageCanvas),
+                );
+            }, null, { crossOrigin: '*' });
+        }
     }
 
     handleTaskClick = (e, { id }) => {
@@ -36,30 +57,32 @@ class Task extends Component {
         this.clearCanvas();
         this.setState({ activeTaskId: id });
         this.setState({ activeTaskDetails });
-        this.taskCanvas.loadFromJSON(canvasObject, this.taskCanvas.renderAll.bind(this.taskCanvas));
+        this.taskCanvas.loadFromJSON(
+            canvasObject,
+            this.taskCanvas.renderAll.bind(this.taskCanvas),
+        );
+        this.collageCanvas.loadFromJSON(
+            canvasObject,
+            this.collageCanvas.renderAll.bind(this.collageCanvas),
+        );
     };
 
-    handleTaskApprove = () => {
-        const { updateTask, findTask } = this.props;
+    handleTaskDecision = (decision) => {
+        const { updateTask, findTask, createAsset } = this.props;
         const { activeTaskDetails } = this.state;
+        const collageCanvasDataUrl = this.collageCanvas.toDataURL(defaultCollage);
+        const collageBlobData = dataURItoBlob(collageCanvasDataUrl);
+        const taskCanvasDataUrl = this.taskCanvas.toDataURL(defaultCollage);
+        const taskBlobData = dataURItoBlob(taskCanvasDataUrl);
 
         updateTask({
             ...activeTaskDetails,
-            status: 'approved',
+            status: decision,
+            updatedOn: new Date(),
+            file: collageBlobData,
         });
-        findTask({});
-        this.resetState();
-        this.clearCanvas();
-        this.scrollToTop();
-    };
-
-    handleTaskReject = () => {
-        const { updateTask, findTask } = this.props;
-        const { activeTaskDetails } = this.state;
-
-        updateTask({
-            ...activeTaskDetails,
-            status: 'rejected',
+        createAsset({
+            file: taskBlobData,
         });
         findTask({});
         this.resetState();
@@ -145,7 +168,7 @@ class Task extends Component {
                                 confirmButton="Approve"
                                 open={modalApprove}
                                 onCancel={this.toggleModalApprove}
-                                onConfirm={this.handleTaskApprove}
+                                onConfirm={() => this.handleTaskDecision('approved')}
                                 size="tiny"
                             />
                             <Button.Or />
@@ -162,7 +185,7 @@ class Task extends Component {
                                 confirmButton="Reject"
                                 open={modalReject}
                                 onCancel={this.toggleModalReject}
-                                onConfirm={this.handleTaskReject}
+                                onConfirm={() => this.handleTaskDecision('rejected')}
                                 size="tiny"
                             />
                         </Button.Group>
@@ -173,16 +196,20 @@ class Task extends Component {
     }
 }
 
-const mapStateToProps = ({ task }) => ({
+const mapStateToProps = ({ task, collage }) => ({
     taskList: task.taskList,
+    collage: collage.collage,
 });
 
 const mapDispatchToProps = (dispatch) => {
     const { findTask, updateTask } = actions.task;
+    const { findCollage, createAsset } = actions.collage;
 
     return {
         findTask: bindActionCreators(findTask, dispatch),
         updateTask: bindActionCreators(updateTask, dispatch),
+        findCollage: bindActionCreators(findCollage, dispatch),
+        createAsset: bindActionCreators(createAsset, dispatch),
     };
 };
 

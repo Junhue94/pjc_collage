@@ -6,3 +6,6 @@ export const SET_TASK_LIST = 'SET_TASK_LIST';
 
 // Upload
 export const SET_IMAGE_ASSET_TMP = 'SET_IMAGE_ASSET_TMP';
+
+// Collage
+export const SET_COLLAGE = 'SET_COLLAGE';

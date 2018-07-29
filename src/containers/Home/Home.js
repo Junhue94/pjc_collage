@@ -3,6 +3,7 @@ import { fabric } from 'fabric';
 import { Menu, Grid, GridRow, GridColumn, List, Icon, Confirm } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import has from 'lodash/has';
 
 import Aux from '../../utils/Auxiliary/Auxiliary';
 import PersonalDetailsForm from '../../components/Home/PersonalDetailsForm';
@@ -13,7 +14,7 @@ import {
     defaultCircle,
     defaultRectangle,
     defaultTriangle,
-    defaulIText,
+    defaultText,
     defaultImage,
 } from '../../utils/Canvas/helper';
 import styles from './Home.scss';
@@ -22,6 +23,9 @@ import actions from '../../store/actions';
 class Home extends Component {
     constructor(props) {
         super(props);
+
+        const { findCollage } = this.props;
+        findCollage({});
 
         this.state = {
             activeCanvasOption: null,
@@ -35,7 +39,7 @@ class Home extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { image } = this.props;
+        const { image, collage } = this.props;
         if (prevProps.image.url !== image.url) {
             const imgObj = new Image();
             imgObj.src = image.url;
@@ -46,6 +50,15 @@ class Home extends Component {
                 this.collageCanvas.add(fabricImage);
                 this.collageCanvas.renderAll();
             };
+        }
+
+        if (has(collage, 'url')) {
+            fabric.Image.fromURL(collage.url, (imgObj) => {
+                this.collageCanvas.setBackgroundImage(
+                    imgObj,
+                    this.collageCanvas.renderAll.bind(this.collageCanvas),
+                );
+            });
         }
     }
 
@@ -111,7 +124,7 @@ class Home extends Component {
     };
 
     generateIText = () => {
-        const { text, options } = defaulIText;
+        const { text, options } = defaultText;
         this.collageCanvas.add(new fabric.IText(text, options));
     };
 
@@ -278,17 +291,20 @@ class Home extends Component {
     }
 }
 
-const mapStateToProps = ({ upload }) => ({
+const mapStateToProps = ({ upload, collage }) => ({
     image: upload.image,
+    collage: collage.collage,
 });
 
 const mapDispatchToProps = (dispatch) => {
     const { createPersonalDetails } = actions.home;
     const { createAssetTmp } = actions.upload;
+    const { findCollage } = actions.collage;
 
     return {
         createPersonalDetails: bindActionCreators(createPersonalDetails, dispatch),
         createAssetTmp: bindActionCreators(createAssetTmp, dispatch),
+        findCollage: bindActionCreators(findCollage, dispatch),
     };
 };
 
