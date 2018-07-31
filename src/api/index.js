@@ -6,7 +6,7 @@ import jQuery from 'jquery';
 
 const SERVER_URL = process.env.NODE_ENV === 'production'
     ? 'https://api.pjccollage.com'
-    : 'http://localhost:3090';
+    : 'http://localhost:8400/api';
 
 /**
  * Feathers Client

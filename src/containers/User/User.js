@@ -11,8 +11,8 @@ class User extends Component {
     constructor(props) {
         super(props);
 
-        const { findUser } = this.props;
-        findUser({});
+        const { findTask } = this.props;
+        findTask({});
 
         this.state = {
             userTableHeader: [
@@ -41,7 +41,7 @@ class User extends Component {
     }
 
     render() {
-        const { userList } = this.props;
+        const { taskList } = this.props;
         const { userTableHeader } = this.state;
 
         return (
@@ -50,7 +50,7 @@ class User extends Component {
                     <Header as="h1">Personal Details List</Header>
                 </div>
                 <ListTable
-                    dataList={userList}
+                    dataList={taskList}
                     headerList={userTableHeader}
                 />
             </div>
@@ -58,15 +58,15 @@ class User extends Component {
     }
 }
 
-const mapStateToProps = ({ user }) => ({
-    userList: user.userList,
+const mapStateToProps = ({ task }) => ({
+    taskList: task.taskList,
 });
 
 const mapDispatchToProps = (dispatch) => {
-    const { findUser } = actions.user;
+    const { findTask } = actions.task;
 
     return {
-        findUser: bindActionCreators(findUser, dispatch),
+        findTask: bindActionCreators(findTask, dispatch),
     };
 };
 
