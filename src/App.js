@@ -6,7 +6,7 @@ import PageLayout from './layouts/HomeLayout/PageLayout';
 import ErrorLayout from './layouts/ErrorLayout/ErrorLayout';
 import LoginLayout from './layouts/LoginLayout/LoginLayout';
 import DashboardLayout from './layouts/DashboardLayout/DashboardLayout';
-import Login from './components/Login/Login';
+import Login from './containers/Login/Login';
 import Error from './components/Error/Error';
 import NotificationSystem from './components/Notification/NotificationSystem';
 import Aux from './utils/Auxiliary/Auxiliary';
