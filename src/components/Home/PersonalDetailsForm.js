@@ -18,11 +18,11 @@ class PersonalDetailsForm extends Component {
     }
 
     render() {
-        const { handleSubmit, createPersonalDetails } = this.props;
+        const { handleSubmit, createTask } = this.props;
 
         return (
             <Aux>
-                <Form onSubmit={handleSubmit(createPersonalDetails)}>
+                <Form onSubmit={handleSubmit(createTask)}>
                     <Field
                         name="name"
                         label="Name"

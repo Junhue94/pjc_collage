@@ -9,6 +9,10 @@ class TaskService {
         }
     }
 
+    createTask(taskDetails) {
+        return this.service.create(taskDetails);
+    }
+
     findTask(params) {
         return this.service.find({ params });
     }

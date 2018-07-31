@@ -102,8 +102,8 @@ class Home extends Component {
         }
     };
 
-    handleCreatePersonalDetails = (personalDetails) => {
-        this.props.createPersonalDetails({
+    handleCreateTask = (personalDetails) => {
+        this.props.createTask({
             ...personalDetails,
             drawing: this.collageCanvas.toJSON().objects,
         });
@@ -280,7 +280,7 @@ class Home extends Component {
                             <div className={styles.body}>
                                 <div className={styles.bodyHeader}>Contribute</div>
                                 <PersonalDetailsForm
-                                    createPersonalDetails={this.handleCreatePersonalDetails}
+                                    createTask={this.handleCreateTask}
                                 />
                             </div>
                         </GridColumn>
@@ -297,12 +297,12 @@ const mapStateToProps = ({ upload, collage }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => {
-    const { createPersonalDetails } = actions.home;
+    const { createTask } = actions.task;
     const { createAssetTmp } = actions.upload;
     const { findCollage } = actions.collage;
 
     return {
-        createPersonalDetails: bindActionCreators(createPersonalDetails, dispatch),
+        createTask: bindActionCreators(createTask, dispatch),
         createAssetTmp: bindActionCreators(createAssetTmp, dispatch),
         findCollage: bindActionCreators(findCollage, dispatch),
     };

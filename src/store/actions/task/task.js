@@ -9,6 +9,16 @@ const setTaskList = taskList => ({
     taskList,
 });
 
+export const createTask = personalDetails => dispatch => taskService
+    .createTask(personalDetails)
+    .then(() => {
+        dispatch(successNotification('Personal Details', 'Details saved successfully!'));
+    })
+    .catch((error) => {
+        dispatch(errorNotification('Fail to save personal details', error));
+    });
+
+
 export const findTask = params => dispatch => taskService
     .findTask(params)
     .then((res) => {
