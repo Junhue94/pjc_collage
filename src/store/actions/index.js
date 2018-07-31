@@ -1,13 +1,13 @@
 import * as user from './user/user';
 import * as task from './task/task';
-import * as upload from './upload/upload';
-import * as collage from './collage/collage';
+import * as uploadAssetTmp from './uploadAssetTmp/uploadAssetTmp';
+import * as uploadCollage from './uploadCollage/uploadCollage';
 
 const actions = {
     user,
     task,
-    upload,
-    collage,
+    uploadAssetTmp,
+    uploadCollage,
 };
 
 export default actions;

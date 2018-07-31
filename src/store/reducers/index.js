@@ -4,8 +4,8 @@ import { reducer as formReducer } from 'redux-form';
 
 import user from './user/user';
 import task from './task/task';
-import upload from './upload/upload';
-import collage from './collage/collage';
+import uploadAssetTmp from './uploadAssetTmp/uploadAssetTmp';
+import uploadCollage from './uploadCollage/uploadCollage';
 import { defaultNotification } from '../../utils/Notification/notificationType';
 
 const rootReducer = combineReducers({
@@ -13,8 +13,8 @@ const rootReducer = combineReducers({
     form: formReducer,
     user,
     task,
-    upload,
-    collage,
+    uploadAssetTmp,
+    uploadCollage,
 });
 
 export default rootReducer;

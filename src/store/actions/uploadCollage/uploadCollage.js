@@ -1,16 +1,16 @@
 import { SET_COLLAGE } from '../actionTypes';
-import CollageService from '../../../api/collage-service';
+import UploadCollageService from '../../../api/upload-collage-service';
 import { successNotification, errorNotification } from '../../../utils/Notification/notificationType';
 
-const collageService = new CollageService();
+const uploadCollageService = new UploadCollageService();
 
 const setCollage = collage => ({
     type: SET_COLLAGE,
     collage,
 });
 
-export const createAsset = imageFile => dispatch => collageService
-    .createAsset(imageFile)
+export const createCollage = imageFile => dispatch => uploadCollageService
+    .createCollage(imageFile)
     .then(() => {
         dispatch(successNotification('Asset', 'Asset created successfully!'));
     })
@@ -18,7 +18,7 @@ export const createAsset = imageFile => dispatch => collageService
         dispatch(errorNotification('Fail to create asset', error));
     });
 
-export const findCollage = params => dispatch => collageService
+export const findCollage = params => dispatch => uploadCollageService
     .findCollage(params)
     .then((res) => {
         dispatch(setCollage(res));

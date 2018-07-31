@@ -68,22 +68,34 @@ class Task extends Component {
     };
 
     handleTaskDecision = (decision) => {
-        const { updateTask, findTask, createAsset } = this.props;
+        const { updateTask, findTask, createCollage } = this.props;
         const { activeTaskDetails } = this.state;
         const collageCanvasDataUrl = this.collageCanvas.toDataURL(defaultCollage);
         const collageBlobData = dataURItoBlob(collageCanvasDataUrl);
         const taskCanvasDataUrl = this.taskCanvas.toDataURL(defaultCollage);
         const taskBlobData = dataURItoBlob(taskCanvasDataUrl);
 
-        updateTask({
-            ...activeTaskDetails,
-            status: decision,
-            updatedOn: new Date(),
-            file: collageBlobData,
-        });
-        createAsset({
-            file: taskBlobData,
-        });
+        switch (decision) {
+            case 'approved':
+                updateTask({
+                    ...activeTaskDetails,
+                    status: decision,
+                    updatedOn: new Date(),
+                    file: taskBlobData,
+                });
+                createCollage({
+                    file: collageBlobData,
+                });
+                break;
+            case 'rejected':
+                updateTask({
+                    ...activeTaskDetails,
+                    status: decision,
+                    updatedOn: new Date(),
+                });
+                break;
+            default:
+        }
         findTask({});
         this.resetState();
         this.clearCanvas();
@@ -196,20 +208,20 @@ class Task extends Component {
     }
 }
 
-const mapStateToProps = ({ task, collage }) => ({
+const mapStateToProps = ({ task, uploadCollage }) => ({
     taskList: task.taskList,
-    collage: collage.collage,
+    collage: uploadCollage.collage,
 });
 
 const mapDispatchToProps = (dispatch) => {
     const { findTask, updateTask } = actions.task;
-    const { findCollage, createAsset } = actions.collage;
+    const { findCollage, createCollage } = actions.uploadCollage;
 
     return {
         findTask: bindActionCreators(findTask, dispatch),
         updateTask: bindActionCreators(updateTask, dispatch),
         findCollage: bindActionCreators(findCollage, dispatch),
-        createAsset: bindActionCreators(createAsset, dispatch),
+        createCollage: bindActionCreators(createCollage, dispatch),
     };
 };
 

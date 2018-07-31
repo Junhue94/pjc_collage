@@ -24,8 +24,12 @@ class Home extends Component {
     constructor(props) {
         super(props);
 
-        const { findCollage } = this.props;
-        findCollage({});
+        const { findCollage, collage } = this.props;
+        if (has(collage, 'url')) {
+            this.setCanvasBackground(collage.url);
+        } else {
+            findCollage({});
+        }
 
         this.state = {
             activeCanvasOption: null,
@@ -53,14 +57,18 @@ class Home extends Component {
         }
 
         if (has(collage, 'url')) {
-            fabric.Image.fromURL(collage.url, (imgObj) => {
-                this.collageCanvas.setBackgroundImage(
-                    imgObj,
-                    this.collageCanvas.renderAll.bind(this.collageCanvas),
-                );
-            });
+            this.setCanvasBackground(collage.url);
         }
     }
+
+    setCanvasBackground = (url) => {
+        fabric.Image.fromURL(url, (imgObj) => {
+            this.collageCanvas.setBackgroundImage(
+                imgObj,
+                this.collageCanvas.renderAll.bind(this.collageCanvas),
+            );
+        });
+    };
 
     handleCanvasOptionsClick = (e, { name }) => {
         this.setState({ activeCanvasOption: name });
@@ -291,15 +299,15 @@ class Home extends Component {
     }
 }
 
-const mapStateToProps = ({ upload, collage }) => ({
-    image: upload.image,
-    collage: collage.collage,
+const mapStateToProps = ({ uploadAssetTmp, uploadCollage }) => ({
+    image: uploadAssetTmp.image,
+    collage: uploadCollage.collage,
 });
 
 const mapDispatchToProps = (dispatch) => {
     const { createTask } = actions.task;
-    const { createAssetTmp } = actions.upload;
-    const { findCollage } = actions.collage;
+    const { createAssetTmp } = actions.uploadAssetTmp;
+    const { findCollage } = actions.uploadCollage;
 
     return {
         createTask: bindActionCreators(createTask, dispatch),
