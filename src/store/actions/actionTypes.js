@@ -9,3 +9,6 @@ export const SET_IMAGE_ASSET_TMP = 'SET_IMAGE_ASSET_TMP';
 
 // Collage
 export const SET_COLLAGE = 'SET_COLLAGE';
+
+// Login
+export const SET_LOGIN = 'SET_LOGIN';
