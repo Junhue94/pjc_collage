@@ -12,3 +12,6 @@ export const SET_COLLAGE = 'SET_COLLAGE';
 
 // Login
 export const SET_LOGIN = 'SET_LOGIN';
+
+// Logout
+export const SET_LOGOUT = 'SET_LOGOUT';
